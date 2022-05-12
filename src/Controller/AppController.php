@@ -13,10 +13,4 @@ class AppController extends AbstractController
     {
         return $this->render('homepage.html.twig');
     }
-
-    #[Route('/login', name: 'loginpage', methods: 'GET')]
-    public function login(): Response
-    {
-        return $this->render('security/login.html.twig');
-    }
 }

@@ -28,7 +28,7 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link" href="#">Nos oeuvres</a>
                     </li>
                     {% if is_granted("ROLE_MEMBER") %}
                     <li class="nav-item">
@@ -36,15 +36,15 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("loginpage") }}">LogIn</a>
+                        <a class="nav-link" href="{{ path("app_login") }}">LogIn</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("app_register_form") }}">Register</a>
+                        <a class="nav-link" href="{{ path("app_register") }}">Register</a>
                     </li>
                     {% endif %}
                     {% if is_granted("ROLE_ADMIN") %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path("homepage") }}">Admin</a>
+                            <a class="nav-link" href="{{ path("app_admin") }}">Admin</a>
                         </li>
                     {% endif %}
                     {#<li class="nav-item dropdown">
