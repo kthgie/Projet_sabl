@@ -11,10 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/updateuser/{id}', name: 'app_update_user')]
-    /**
-     * @Method("POST")
-     */
+    #[Route('/updateuser/{id}', name: 'app_update_user', methods: 'GET')]
     public function index(ManagerRegistry $doctrine, int $id, Request $request): Response
     {
         $entityManager = $doctrine->getManager();
