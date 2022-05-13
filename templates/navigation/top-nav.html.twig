@@ -1,0 +1,67 @@
+<nav class="uk-navbar-container uk-margin" uk-navbar>
+    <div class="uk-navbar-center">
+        <div class="uk-navbar-center-left">
+            <div>
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active">
+                        <a href="/oeuvre">Les Oeuvres</a>
+                    </li>
+                    <li>
+                        <a href="/theme">Les Themes</a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li class="uk-active">
+                                    <a href="#">Active</a>
+                                </li>
+                                <li>
+                                    <a href="#">Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Item</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <a class="uk-navbar-item uk-logo" href="/
+        ">PROJET SABLES</a>
+        <div class="uk-navbar-center-right">
+            <div>
+                <ul class="uk-navbar-nav">
+                    
+                        
+                        {% if is_granted("ROLE_MEMBER") %}
+                        <a href="#">BONJOUR "UTILISATEUR"</a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li class="uk-active">
+                                    <a href="#">MON PROFIL</a>
+                                </li>
+                                <li>
+                                    <a href="#">MES COUPS DE COEURS</a>
+                                </li>
+                                {% if is_granted("ROLE_ADMIN") %}
+                                <li>
+                                    <a href="#">ADMIN</a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <a href="#">ME DECONNECTER</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% else %}
+                            <li class="uk-active">
+                                <a href="#">ME CONNECTER</a>
+                            </li>
+                            <li class="uk-active">
+                                <a href="#">M'ENREGISTRER</a>
+                            </li>
+                        {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ThemeOeuvre{% endblock %}
+
+{% block body %}
+    <h1>Create new ThemeOeuvre</h1>
+
+    {{ include('theme_oeuvre/_form.html.twig') }}
+
+    <a href="{{ path('app_theme_oeuvre_index') }}">back to list</a>
+{% endblock %}

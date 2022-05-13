@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Oeuvre index{% endblock %}
+
+{% block content %}
+
+    <h1>Oeuvre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Artiste</th>
+                <th>Année</th>
+                <th>Created_at</th>
+                <th>Modified_at</th>
+                <th>Categorie</th>
+                <th>theme</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oeuvre in oeuvres %}
+            <tr>
+                <td>{{ oeuvre.id }}</td>
+                <td>{{ oeuvre.Nom }}</td>
+                <td>{{ oeuvre.Description }}</td>
+                <td>{{ oeuvre.Artiste }}</td>
+                <td>{{ oeuvre.Annee }}</td>
+                <td>{{ oeuvre.CreatedAt ? oeuvre.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ oeuvre.ModifiedAt ? oeuvre.ModifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ oeuvre.CategorieId.nom }}</td>
+                <td>
+                {% for association in oeuvre.themeOeuvres %}
+                {{ association.themeId.nom }},
+                {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_oeuvre_show', {'id': oeuvre.id}) }}">show</a>
+                    <a href="{{ path('app_oeuvre_edit', {'id': oeuvre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_oeuvre_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ThemeOeuvre index{% endblock %}
+
+{% block body %}
+    <h1>ThemeOeuvre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for theme_oeuvre in theme_oeuvres %}
+            <tr>
+                <td>{{ theme_oeuvre.id }}</td>
+                <td>{{ theme_oeuvre.OeuvreId }}</td>
+                <td>{{ theme_oeuvre.ThemeId }}</td>
+                <td>
+                    <a href="{{ path('app_theme_oeuvre_show', {'id': theme_oeuvre.id}) }}">show</a>
+                    <a href="{{ path('app_theme_oeuvre_edit', {'id': theme_oeuvre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_theme_oeuvre_new') }}">Create new</a>
+{% endblock %}

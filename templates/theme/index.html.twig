@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Theme index{% endblock %}
+
+{% block content %}
+    <h1>Theme index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Created_at</th>
+                <th>Modified_at</th>
+                <th>Oeuvres associées</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for theme in themes %}
+            <tr>
+                <td>{{ theme.id }}</td>
+                <td>{{ theme.Nom }}</td>
+                <td>{{ theme.Description }}</td>
+                <td>{{ theme.CreatedAt ? theme.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ theme.ModifiedAt ? theme.ModifiedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                {% for association in theme.themeOeuvres %}
+                {{ association.oeuvreId.nom }},
+                {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('app_theme_show', {'id': theme.id}) }}">show</a>
+                    <a href="{{ path('app_theme_edit', {'id': theme.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_theme_new') }}">Create new</a>
+{% endblock %}

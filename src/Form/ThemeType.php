@@ -2,25 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Commentaires;
+use App\Entity\Theme;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommentairesType extends AbstractType
+class ThemeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('content')
-            //->add('created_at')
+            ->add('Nom')
+            ->add('Description')
+            //->add('Created_at')
+            //->add('Modified_at')
+            
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Commentaires::class,
+            'data_class' => Theme::class,
         ]);
     }
 }
