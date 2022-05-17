@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Theme;
 use App\Repository\OeuvreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,9 +40,10 @@ class Oeuvre
     #[ORM\OneToMany(mappedBy: 'oeuvre_id', targetEntity: ThemeOeuvre::class)]
     private $themeOeuvres;
 
-    private $themes;
+    #[ORM\OneToMany(mappedBy: 'oeuvre_id', targetEntity: Theme::class)]
+    private $themes; 
 
-    private $image;
+    //private $image;
 
     #[ORM\ManyToOne(targetEntity: Categorie::class, inversedBy: 'oeuvres')]
     #[ORM\JoinColumn(nullable: false)]
@@ -51,6 +53,7 @@ class Oeuvre
     {
         $this->commentaire = new ArrayCollection();
         $this->themeOeuvres = new ArrayCollection();
+        $this->themes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +224,21 @@ class Oeuvre
     public function setImage($image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getThemes(): Collection
+    {
+        return $this->themes;
+    }
+
+    public function addTheme(Theme $theme): self
+    {
+        if (!$this->themes->contains($theme)) {
+            $this->themes[] = $theme;
+            //$theme->setOeuvreId($this);
+        }
 
         return $this;
     }

@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Oeuvre;
+use App\Entity\ThemeOeuvre;
 use App\Form\OeuvreType;
 use App\Repository\OeuvreRepository;
+use App\Repository\ThemeOeuvreRepository;
+use App\Repository\ThemeRepository;
 use DateTime;
 use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +31,7 @@ class OeuvreController extends AbstractController
     }
 
     #[Route('/new', name: 'app_oeuvre_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, OeuvreRepository $oeuvreRepository): Response
+    public function new(Request $request, OeuvreRepository $oeuvreRepository, ThemeOeuvreRepository $themeOeuvreRepository): Response
     {
         $oeuvre = new Oeuvre();
         $form = $this->createForm(OeuvreType::class, $oeuvre);
@@ -37,22 +40,37 @@ class OeuvreController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $monImage = $form->get('image')->getData();
-
+            //$monImage = $form->get('image')->getData();
+           $mesThemes = $form->get('themes')->getData();
+           //var_dump($mesThemes[1]->getId()); die;
+           
             $id = $oeuvreRepository->add($oeuvre, true);
+            $monOeuvre = $oeuvreRepository->findOneBy(['id'=> $id]);
 
-            if ($monImage) {
-                $newImage = 'image' . $id . '.' . $monImage->guessExtension();
+            $themeOeuvres=[];
+foreach($mesThemes as $theme) {
+$themeOeuvre = new ThemeOeuvre();
+$themeOeuvre->setOeuvreId($monOeuvre)
+->setThemeId($theme);
+$themeOeuvres[] = $themeOeuvre;
+}
 
-                try {
-                    $monImage->move(
-                        $this->getParameter('new_image'),
-                        $newImage
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-            }
+foreach($themeOeuvres as $themeOeuvre){
+    $themeOeuvreRepository->add($themeOeuvre, true);
+}
+          
+            // if ($monImage) {
+            //     $newImage = 'image' . $id . '.' . $monImage->guessExtension();
+
+            //     try {
+            //         $monImage->move(
+            //             $this->getParameter('new_image'),
+            //             $newImage
+            //         );
+            //     } catch (FileException $e) {
+                    // // ... handle exception if something happens during file upload
+            //     }
+            // }
 
             return $this->redirectToRoute('app_oeuvre_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -79,12 +97,13 @@ class OeuvreController extends AbstractController
         $oeuvre->setModifiedAt(new DateTime('now'));
 
         if ($form->isSubmitted() && $form->isValid()) {
+            var_dump($oeuvre); die;
             $monImage = $form->get('image')->getData();
             $id = $oeuvreRepository->add($oeuvre, true);
 
             if ($monImage) {
                 $oldImage = new FileFile('uploads/images/image' . $id . '.jpg');
-var_dump(pathinfo('../public/uploads/images/image7.jpg')); die;
+
 
                 $newImage = 'image' . $id . '.' . $monImage->guessExtension();
 
